@@ -52,14 +52,20 @@ export default function Dashboard() {
     setVisible(false);
     setError(null);
     setApod(null);
-    try {
-      const data = await getApod(d);
-      setApod(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    let lastErr;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const data = await getApod(d);
+        setApod(data);
+        setLoading(false);
+        return;
+      } catch (err) {
+        lastErr = err;
+        if (attempt < 2) await new Promise((r) => setTimeout(r, 1500));
+      }
     }
+    setError(lastErr.message);
+    setLoading(false);
   }, []);
 
   // Fetch on mount + every date change
