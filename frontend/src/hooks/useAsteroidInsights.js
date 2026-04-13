@@ -29,7 +29,6 @@ export default function useAsteroidInsights(asteroids) {
       slowest,
       avgDistance,
       avgSpeed,
-      avgDiameter,
       hazardousCount:   hazardous.length,
       hazardPercentage: hazardPercent,
       closeCount,
