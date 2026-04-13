@@ -107,7 +107,7 @@ NASAProject/
 ### 1. Clone
 
 ```bash
-git clone https://github.com/your-username/NASAProject.git
+git clone git@github.com:destinyjeames/NASAProject.git
 cd NASAProject
 ```
 
