@@ -22,6 +22,15 @@ export const getAsteroids = (params = {}) => {
     .then(handleResponse);
 };
 
-export const getApod = (date) =>
-  fetchWithTimeout(`${BASE_URL}/api/apod${date ? `?date=${date}` : ""}`)
-    .then(handleResponse);
+const apodCache = new Map();
+
+export const getApod = (date) => {
+  if (apodCache.has(date)) return Promise.resolve(apodCache.get(date));
+  return fetchWithTimeout(`${BASE_URL}/api/apod${date ? `?date=${date}` : ""}`)
+    .then(handleResponse)
+    .then((data) => { apodCache.set(date, data); return data; });
+};
+
+export const prefetchApod = (date) => {
+  if (!apodCache.has(date)) getApod(date).catch(() => {});
+};

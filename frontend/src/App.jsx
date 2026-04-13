@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Asteroids from "./pages/Asteroids";
+import { prefetchApod } from "./services/api";
 
 function Navbar() {
   return (
@@ -12,17 +14,16 @@ function Navbar() {
         </div>
         <div className="navbar-links">
           <NavLink
-            to="/"
-            end
-            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-          >
-            APOD
-          </NavLink>
-          <NavLink
             to="/asteroids"
             className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
           >
             Asteroids
+          </NavLink>
+          <NavLink
+            to="/apod"
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+          >
+            APOD
           </NavLink>
         </div>
       </div>
@@ -31,12 +32,19 @@ function Navbar() {
 }
 
 export default function App() {
+  // Prefetch today's APOD in the background while the user is on the asteroid page
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    prefetchApod(today);
+  }, []);
+
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Navigate to="/asteroids" replace />} />
         <Route path="/asteroids" element={<Asteroids />} />
+        <Route path="/apod" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
