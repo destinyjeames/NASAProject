@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import compression from "compression";
 import dotenv from "dotenv";
 import asteroidRoutes from "./routes/asteroidRoutes.js";
 import apodRoutes from "./routes/apodRoutes.js";
@@ -9,6 +10,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+app.use(compression());
 app.use(cors());
 app.use(express.json());
 

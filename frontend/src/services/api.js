@@ -10,11 +10,18 @@ const handleResponse = async (response) => {
   return response.json();
 };
 
+const fetchWithTimeout = (url, ms = 15000) => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(id));
+};
+
 export const getAsteroids = (params = {}) => {
   const query = new URLSearchParams(params).toString();
-  const url = `${BASE_URL}/api/asteroids${query ? `?${query}` : ""}`;
-  return fetch(url).then(handleResponse);
+  return fetchWithTimeout(`${BASE_URL}/api/asteroids${query ? `?${query}` : ""}`)
+    .then(handleResponse);
 };
 
 export const getApod = (date) =>
-  fetch(`${BASE_URL}/api/apod${date ? `?date=${date}` : ""}`).then(handleResponse);
+  fetchWithTimeout(`${BASE_URL}/api/apod${date ? `?date=${date}` : ""}`)
+    .then(handleResponse);

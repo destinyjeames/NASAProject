@@ -4,6 +4,7 @@ export const getApod = async (req, res) => {
   try {
     const date = req.query.date || null;
     const data = await fetchApod(date);
+    res.set("Cache-Control", "public, max-age=3600");
     res.status(200).json({
       title:       data.title,
       url:         data.url,

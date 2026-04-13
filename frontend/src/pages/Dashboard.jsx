@@ -53,7 +53,7 @@ export default function Dashboard() {
     setError(null);
     setApod(null);
     let lastErr;
-    for (let attempt = 0; attempt < 3; attempt++) {
+    for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const data = await getApod(d);
         setApod(data);
@@ -61,7 +61,7 @@ export default function Dashboard() {
         return;
       } catch (err) {
         lastErr = err;
-        if (attempt < 2) await new Promise((r) => setTimeout(r, 1500));
+        if (attempt < 1) await new Promise((r) => setTimeout(r, 1000));
       }
     }
     setError(lastErr.message);
