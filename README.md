@@ -2,7 +2,7 @@
 
 A full-stack space data dashboard built on top of NASA's public APIs. It has two main sections: a real-time asteroid tracker that pulls from NASA's Near-Earth Object Web Service, and a daily astronomy picture viewer using the APOD API. The whole thing runs on a Node/Express backend that keeps the API key server-side, with a React frontend handling all the visualisation.
 
-**Live Demo:** [droidstats.vercel.app](https://droidstats.vercel.app) &nbsp;·&nbsp; **API:** [droidstats-api.onrender.com](https://droidstats-api.onrender.com)
+**Live Demo:** [droidstats.vercel.app]( https://nasa-project-mauve.vercel.app/) &nbsp;·&nbsp; **API:** [droidstats-api.onrender.com](https://droidstats-api.onrender.com)
 
 ---
 
